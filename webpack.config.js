@@ -11,10 +11,10 @@ module.exports = {
   module: {
     loaders: [
     { loader: 'babel-loader', test: dir_js },
-    { loader: "style!css", test: /\.css$/  },
+    { loader: 'style!css', test: /\.css$/  }
     ]
   },
   devServer: {
-    contentBase: __dirname,
+    contentBase: __dirname
   }
 };
