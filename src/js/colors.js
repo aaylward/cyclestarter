@@ -1,4 +1,4 @@
-import {HEX_VALUES} from './constants';
+import constants from './constants';
 
 export default (numberOfColors) => {
   const newColors = [];
@@ -11,7 +11,7 @@ export default (numberOfColors) => {
 const randomHexColor = () => {
   const colorCodeComponents = ['#'];
   for (let i=0; i<6; i++) {
-    colorCodeComponents.push(HEX_VALUES.charAt(Math.floor(Math.random() * 16)));
+    colorCodeComponents.push(constants.HEX_VALUES.charAt(Math.floor(Math.random() * 16)));
   }
   return colorCodeComponents.join('');
 };
