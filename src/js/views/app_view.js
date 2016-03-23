@@ -38,7 +38,7 @@ const renderColorContainer = (props) => {
   return (
     <div className="colors">
       <span className="title">Colors</span>
-      <input type="text" className="number-of-colors" />
+      <input type="text" className="number-of-colors" value={colors.length}/>
       <button className="regenerate">Regenerate</button>
       <div className="boxes">
         {renderColors(colors)}
@@ -48,13 +48,13 @@ const renderColorContainer = (props) => {
 }
 
 const renderGridContainer = (props) => {
-  const {grid} = props;
+  const {grid, gridSize} = props;
   const availableWidth = document.body.offsetHeight - 200 - constants.MARGIN_COMPENSATION_PIXELS;
 
   return (
     <div className="cells">
       <span className="title">Grid Size: </span>
-      <input type="text" className="grid-size" />
+      <input type="text" className="grid-size" value={gridSize} />
       <span>hold cmd for drag-n-color</span>
       <div className="grid">
         {renderGrid(grid, availableWidth)}

@@ -9,8 +9,8 @@ function main(sources) {
   const initialColors = generateColors(8);
 
   //const regenerateClick$ = sources.DOM.select('button.regenerate').events('click');
-  const numberOfColors$ = sources.DOM.select('input.number-of-colors').events('change');
-  const gridSize$ = sources.DOM.select('input.grid-size').events('change');
+  const numberOfColors$ = sources.DOM.select('input.number-of-colors').events('change').startWith({currentTarget: {value: '8'}});
+  const gridSize$ = sources.DOM.select('input.grid-size').events('change').startWith({currentTarget: {value: '2'}});
 
   let props = {
     gridSize: 2,
@@ -23,12 +23,13 @@ function main(sources) {
 
   return {
     DOM: Rx.Observable.combineLatest(numberOfColors$, gridSize$)
-      .map((paletteSize, gridSize) => {
+      .map((events) => {
+        let [palette, size] = events.map(e => +e.currentTarget.value);
         return {
-          gridSize: gridSize,
-          numberOfColors: paletteSize,
-          colors: generateColors(paletteSize),
-          grid: props.grid,
+          gridSize: size,
+          numberOfColors: palette,
+          colors: generateColors(palette),
+          grid: newGrid(size * size),
           selectedColor: '#fff',
           drag: false
         }
@@ -41,5 +42,13 @@ function main(sources) {
 const drivers = {
   DOM: makeDOMDriver('#app')
 };
+
+const newGrid = (size) => {
+  const grid = [];
+  for (let i=0; i<size; i++) {
+    grid.push('#fff');
+  }
+  return grid;
+}
 
 Cycle.run(main, drivers);
