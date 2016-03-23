@@ -80,7 +80,8 @@ const renderGrid = (cellColors, availableWidth) => {
   for (let i=0; i<cellColors.length; i++) {
     const cellStyle = getSquareStyle(cellColors[i], squareSize);
     const classes = getSquareClass(i, rowSize);
-    gridCells.push(<div className={classes} style={cellStyle} data-id={''+i}></div>);
+    const cellId = 'cell-id-'+i;
+    gridCells.push(<div className={classes} style={cellStyle} id={cellId}></div>);
   }
 
   return gridCells;
