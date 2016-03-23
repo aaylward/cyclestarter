@@ -1,5 +1,5 @@
 import Cycle from '@cycle/core';
-import {makeDOMDriver} from '@cycle/dom';
+import drivers from './drivers';
 import app from './views/app_view';
 
 function main(drivers) {
@@ -10,9 +10,5 @@ function main(drivers) {
       .map(app)
   };
 }
-
-const drivers = {
-  DOM: makeDOMDriver('#app')
-};
 
 Cycle.run(main, drivers);

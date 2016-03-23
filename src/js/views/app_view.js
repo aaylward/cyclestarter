@@ -5,5 +5,5 @@ import {hJSX} from '@cycle/dom';
 export default (toggled) =>
 <div>
   <input type="checkbox" /> Toggle me
-  <p>{toggled ? 'ON' : 'off'}</p>
+  <p>{toggled ? 'UPUPUP' : 'off'}</p>
 </div>
