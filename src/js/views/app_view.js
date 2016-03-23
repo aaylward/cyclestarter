@@ -1,6 +1,6 @@
 /*eslint no-unused-vars: [2, { "varsIgnorePattern": "hJSX" }]*/
 import {hJSX} from '@cycle/dom';
-import {BORDER_COMPENSATION_PIXELS, MARGIN_COMPENSATION_PIXELS} from '../constants';
+import constants from '../constants';
 
 /*
   var props = {
@@ -49,7 +49,7 @@ const renderColorContainer = (props) => {
 
 const renderGridContainer = (props) => {
   const {grid} = props;
-  const availableWidth = document.body.offsetHeight - 200 - MARGIN_COMPENSATION_PIXELS;
+  const availableWidth = document.body.offsetHeight - 200 - constants.MARGIN_COMPENSATION_PIXELS;
 
   return (
     <div className="cells">
@@ -65,14 +65,14 @@ const renderGridContainer = (props) => {
 
 const renderColors = (colors) => {
   return colors.map(color => {
-    <div className="color option" style={{backgroundColor: color}}></div>
+    return <div className="color option" style={{backgroundColor: color}}></div>
   })
 }
 
 const renderGrid = (cellColors, availableWidth) => {
   const gridCells = [];
   const gridSize = cellColors.length;
-  const squareSize = (availableWidth/gridSize - BORDER_COMPENSATION_PIXELS) + 'px';
+  const squareSize = (availableWidth/gridSize - constants.BORDER_COMPENSATION_PIXELS) + 'px';
   const rowSize = Math.sqrt(cellColors.length);
 
   for (let i=0; i<cellColors.length; i++) {
