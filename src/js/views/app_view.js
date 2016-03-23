@@ -49,14 +49,17 @@ const renderColorContainer = (props) => {
 
 const renderGridContainer = (props) => {
   const {grid, gridSize} = props;
-  const availableWidth = document.body.offsetHeight - 200 - constants.MARGIN_COMPENSATION_PIXELS;
+  const availableWidth = document.body.offsetHeight - 280 - constants.MARGIN_COMPENSATION_PIXELS;
+  const gridContainerStyle = {
+    width: availableWidth + constants.BORDER_COMPENSATION_PIXELS + 'px'
+  };
 
   return (
     <div className="cells">
       <span className="title">Grid Size: </span>
       <input type="text" className="grid-size" value={gridSize} />
       <span>hold cmd for drag-n-color</span>
-      <div className="grid">
+      <div className="grid" style={gridContainerStyle}>
         {renderGrid(grid, availableWidth)}
       </div>
     </div>
@@ -71,9 +74,8 @@ const renderColors = (colors) => {
 
 const renderGrid = (cellColors, availableWidth) => {
   const gridCells = [];
-  const gridSize = cellColors.length;
-  const squareSize = (availableWidth/gridSize - constants.BORDER_COMPENSATION_PIXELS) + 'px';
   const rowSize = Math.sqrt(cellColors.length);
+  const squareSize = (availableWidth/rowSize - constants.BORDER_COMPENSATION_PIXELS) + 'px';
 
   for (let i=0; i<cellColors.length; i++) {
     const cellStyle = getSquareStyle(cellColors[i], squareSize);
