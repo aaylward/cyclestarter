@@ -1,0 +1,70 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #eee;
+  position: relative;
+  font-family: Helvetica;
+  text-align: center;
+}
+
+.header {
+  background-color: lightgreen;
+  border-bottom: 1px solid #888;
+  margin-bottom: 2em;
+}
+
+.header h1 {
+  margin: 0;
+  padding: 1em;
+  font-weight: 100;
+}
+
+.colors, .cells {
+  margin: 0 auto;
+  width: 80%;
+  height: 141px;
+}
+
+input {
+  width: 3em;
+}
+
+.colors .option {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #ccc;
+  margin: 10px;
+}
+
+.colors .option.selected {
+  border: 2px solid #000;
+}
+
+.colors .boxes {
+  display: flex;
+  justify-content: center;
+}
+
+.cells .grid {
+  position: relative;
+  margin: 0 auto;
+}
+
+.cell {
+  float: left;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.cell.left {
+  border-left: 1px solid black;
+}
+
+.cell.top {
+  border-top: 1px solid black;
+}
+

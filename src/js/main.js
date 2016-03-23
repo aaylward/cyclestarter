@@ -1,14 +1,21 @@
 import Cycle from '@cycle/core';
-import drivers from './drivers';
-import app from './views/app_view';
+import {makeDOMDriver} from '@cycle/dom';
+import render from './views/app_view';
 
-function main(drivers) {
+function main(sources) {
+  const regenerateClick$ = sources.DOM.select('input.regenerate').events('click');
+
   return {
-    DOM: drivers.DOM.select('input').events('click')
+    DOM: regenerateClick$
       .map(ev => ev.target.checked)
       .startWith(false)
-      .map(app)
+      .map(render)
   };
 }
+
+
+const drivers = {
+  DOM: makeDOMDriver('#app')
+};
 
 Cycle.run(main, drivers);
