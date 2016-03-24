@@ -2,17 +2,6 @@
 import {hJSX} from '@cycle/dom';
 import constants from '../constants';
 
-/*
-  var props = {
-    gridSize: DEFAULT_GRID_SIZE,
-    numberOfColors: DEFAULT_NUMBER_OF_COLORS,
-    colors: [],
-    grid: [],
-    selectedColor: "#fff",
-    drag: false
-  };
- */
-
 const render = (props) => {
   const div = (
     <div>
@@ -34,14 +23,14 @@ const renderHeader = () => {
 }
 
 const renderColorContainer = (props) => {
-  const {colors} = props;
+  const {colors, selectedColor} = props;
   return (
     <div className="colors">
       <span className="title">Colors</span>
       <input type="text" className="number-of-colors" value={colors.length}/>
       <button className="regenerate">Regenerate</button>
       <div className="boxes">
-        {renderColors(colors)}
+        {renderColors(colors, selectedColor)}
       </div>
     </div>
   )
@@ -66,10 +55,14 @@ const renderGridContainer = (props) => {
   )
 }
 
-const renderColors = (colors) => {
-  return colors.map(color => {
-    return <div className="color option" style={{backgroundColor: color}}></div>
-  })
+const renderColors = (colors, selectedColor) => {
+  const colorDivs = [];
+  for (let i=0; i<colors.length; i++) {
+    const colorId = 'color-id:'+i;
+    const classes = getColorClass(i, selectedColor);
+    colorDivs.push(<div className={classes} style={{backgroundColor: colors[i]}} id={colorId}></div>);
+  }
+  return colorDivs;
 }
 
 const renderGrid = (cellColors, availableWidth) => {
@@ -78,32 +71,27 @@ const renderGrid = (cellColors, availableWidth) => {
   const squareSize = (availableWidth/rowSize - constants.BORDER_COMPENSATION_PIXELS) + 'px';
 
   for (let i=0; i<cellColors.length; i++) {
-    const cellStyle = getSquareStyle(cellColors[i], squareSize);
-    const classes = getSquareClass(i, rowSize);
-    const cellId = 'cell-id-'+i;
-    gridCells.push(<div className={classes} style={cellStyle} id={cellId}></div>);
+    gridCells.push(makeCell(i, rowSize, cellColors, squareSize));
   }
 
   return gridCells;
 }
 
+const makeCell = (i, rowSize, cellColors, squareSize) => {
+  const cellId = 'cell-id:'+i;
+  return <div className={getSquareClass(i, rowSize)} style={getSquareStyle(cellColors[i], squareSize)} id={cellId}></div>
+}
+
 const getSquareClass = (i, rowSize) => {
-  let classes = 'cell';
-  if (i % rowSize === 0) {
-    classes += ' left';
-  }
-  if (i < rowSize) {
-    classes += ' top';
-  }
-  return classes;
+  return `cell${i%rowSize===0 ? ' left' : ''}${i<rowSize ? ' top' : ''}`;
+}
+
+const getColorClass = (i, selectedIndex) => {
+  return `color option${i===selectedIndex ? ' selected' : ''}`;
 }
 
 const getSquareStyle = (color, size) => {
-  return {
-    backgroundColor: color,
-    height: size,
-    width: size
-  }
+  return { backgroundColor: color, height: size, width: size }
 }
 
 export default render;

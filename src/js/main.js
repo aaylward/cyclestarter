@@ -11,26 +11,29 @@ function main(sources) {
   //const regenerateClick$ = sources.DOM.select('button.regenerate').events('click');
   const numberOfColors$ = sources.DOM.select('input.number-of-colors').events('change').startWith({currentTarget: {value: '8'}});
   const gridSize$ = sources.DOM.select('input.grid-size').events('change').startWith({currentTarget: {value: '2'}});
+  const colorSelection$ = sources.DOM.select('div.color.option').events('click').startWith(null);
 
   let props = {
     gridSize: 2,
     numberOfColors: 8,
     colors: initialColors,
     grid: ['#fff', '#fff', '#fff', '#fff'],
-    selectedColor: '#fff',
+    selectedColor: null,
     drag: false
   };
 
   return {
-    DOM: Rx.Observable.combineLatest(numberOfColors$, gridSize$)
+    DOM: Rx.Observable.combineLatest(numberOfColors$, gridSize$, colorSelection$)
       .map((events) => {
-        let [palette, size] = events.map(e => +e.currentTarget.value);
+        let [paletteE, sizeE, selectionE] = events;
+        let [palette, size] = [paletteE, sizeE].map(e => +e.currentTarget.value);
+        let selection = selectionE ? +selectionE.currentTarget.id.split(':')[1] : null;
         return {
           gridSize: size,
           numberOfColors: palette,
           colors: generateColors(palette),
           grid: newGrid(size * size),
-          selectedColor: '#fff',
+          selectedColor: selection,
           drag: false
         }
       })
